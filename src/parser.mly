@@ -1,17 +1,5 @@
 %{
 open Syntax
-(*
-let convert_pos p =
-    {
-        file = p.Lexing.pos_fname;
-        line = p.Lexing.pos_lnum;
-        column = p.Lexing.pos_cnum - p.Lexing.pos_bol
-    }
-;;
-let at () =
-    ( (convert_pos (Parsing.symbol_start_pos())), (convert_pos (Parsing.symbol_end_pos())) )
-;;
-*)
 %}
 
 
