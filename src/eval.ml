@@ -1,4 +1,6 @@
 open Syntax
+open Str
+
 
 module SS = Set.Make(String);;
 
@@ -19,7 +21,14 @@ and resolve_conflicts a b =
     let used_names = SS.union (variables a) (variables b) in
     let names_to_change = SS.inter (bound_variables a) (bound_variables b) in
     let rec new_name name =
-        if SS.mem name used_names then new_name (name^"'") else name
+        if SS.mem name used_names then new_name begin
+            if Str.string_match (Str.regexp "[^0-9'][0-9]+$") name 0 then
+                Str.global_substitute (Str.regexp "[0-9]+$") (fun x -> string_of_int ((int_of_string (Str.matched_string x)) + 1)) name
+            else if Str.string_match (Str.regexp "[^0-9']$") name 0 then
+                name ^ "2"
+            else
+                name ^ "'"
+        end else name
     in
     let replacements = ref [] in
     SS.iter (fun x -> replacements := (x, new_name x)::!replacements) names_to_change;

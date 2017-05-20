@@ -3,10 +3,10 @@ build: lambda
 lambda: lambda.byte
 
 %.native: src/*.*
-	@ocamlbuild -cflag -bin-annot -use-ocamlfind $@
+	@ocamlbuild $@
 
 %.byte: src/*.*
-	@ocamlbuild -cflag -bin-annot -use-ocamlfind -tag debug $@
+	@ocamlbuild -tag debug $@
 
 clean:
 	@ocamlbuild -clean
